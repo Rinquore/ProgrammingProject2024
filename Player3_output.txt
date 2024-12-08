@@ -1,0 +1,56 @@
+Player 3 initial hand 10 12 14 13
+Player 3 draws 4 from deck 3
+Player 3 discards 12 to deck 4
+Player 3 hand: 10 4 14 13
+Player 3 draws 3 from deck 3
+Player 3 discards 4 to deck 4
+Player 3 hand: 3 10 14 13
+Player 3 draws 2 from deck 3
+Player 3 discards 13 to deck 4
+Player 3 hand: 3 10 14 2
+Player 3 draws 1 from deck 3
+Player 3 discards 14 to deck 4
+Player 3 hand: 3 10 1 2
+Player 3 draws 10 from deck 3
+Player 3 discards 10 to deck 4
+Player 3 hand: 3 10 1 2
+Player 3 draws 14 from deck 3
+Player 3 discards 10 to deck 4
+Player 3 hand: 3 14 1 2
+Player 3 draws 12 from deck 3
+Player 3 discards 12 to deck 4
+Player 3 hand: 3 14 1 2
+Player 3 draws 1 from deck 3
+Player 3 discards 1 to deck 4
+Player 3 hand: 3 14 1 2
+Player 3 draws 3 from deck 3
+Player 3 discards 2 to deck 4
+Player 3 hand: 3 3 1 14
+Player 3 draws 14 from deck 3
+Player 3 discards 14 to deck 4
+Player 3 hand: 3 3 1 14
+Player 3 draws 4 from deck 3
+Player 3 discards 14 to deck 4
+Player 3 hand: 3 3 1 4
+Player 3 draws 4 from deck 3
+Player 3 discards 4 to deck 4
+Player 3 hand: 3 3 1 4
+Player 3 draws 13 from deck 3
+Player 3 discards 1 to deck 4
+Player 3 hand: 3 3 13 4
+Player 3 draws 12 from deck 3
+Player 3 discards 4 to deck 4
+Player 3 hand: 3 3 13 12
+Player 3 draws 14 from deck 3
+Player 3 discards 12 to deck 4
+Player 3 hand: 3 3 13 14
+Player 3 draws 3 from deck 3
+Player 3 discards 14 to deck 4
+Player 3 hand: 3 3 3 13
+Player 3 draws 13 from deck 3
+Player 3 discards 13 to deck 4
+Player 3 hand: 3 3 3 13
+Player 3 draws 10 from deck 3
+Player 4 has informed Player 3 that Player 4 has won
+Player 3 exits 
+Player 3 final hand: 3 3 3 13

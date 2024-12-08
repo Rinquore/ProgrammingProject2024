@@ -1,33 +1,31 @@
 import java.io.BufferedWriter;
-import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
+public class Deck{
+    public ArrayList<Integer> deck=new ArrayList<>();
+    public Deck(){}
 
-public class Deck {
-    private ArrayList<Integer> deck=new ArrayList<>();
-
-    //constructor
-    public Deck(){
+    public void AddCard(int card, boolean bottom){
+        if(bottom){
+            deck.add(0, card);
+        }else{
+            deck.add(card);
+        }
     }
-
-    public void addCard(int card){
-        deck.add(card);
-    }
-
     public int getCard(){
-        int card=deck.get(0);
-        deck.remove(0);
+        int card=deck.get(deck.size()-1);
+        deck.remove(deck.size()-1);
         return card;
-        
-    }
 
-    public void writeToFile(int decknum){        
-        try{
-            BufferedWriter writer= new BufferedWriter(new FileWriter("deck_output"+decknum+".txt"));
-            writer.write("deck"+decknum+" contents:");
+    }
+    public void writeDeckFile(int decknum, int last_discard){ //print out deck to a file
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Deck"+decknum+"_output.txt"));
+            writer.write("deck"+decknum+" contents: "+last_discard);
             for (int i = 0; i < deck.size(); i++) {
-                writer.write(" "+deck.get(i));
+                writer.write(" "+Integer.toString(deck.get(i)));
             }
             writer.close();
         } catch (IOException e) {
