@@ -1,6 +1,8 @@
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class Deck {
     private ArrayList<Integer> deck=new ArrayList<>();
@@ -20,16 +22,15 @@ public class Deck {
         
     }
 
-    public void writeToFile(int decknum){
-        BufferedWriter writer= new BufferedWriter(new FileWriter("deck_output"+decknum+".txt"));
-        writer.write("deck"+decknum+" contents:");
-        for (int i = 0; i < deck.size(); i++) {
-            write.write(" "+deck.get(i));
+    public void writeToFile(int decknum){        
+        try{
+            BufferedWriter writer= new BufferedWriter(new FileWriter("deck_output"+decknum+".txt"));
+            writer.write("deck"+decknum+" contents:");
+            for (int i = 0; i < deck.size(); i++) {
+                writer.write(" "+deck.get(i));
+            }
+            writer.close();
+        } catch (IOException e) {
         }
-        writer.close();
     }
-
-
-
-    //addCard function,getCard function,writetoFile function
 }
