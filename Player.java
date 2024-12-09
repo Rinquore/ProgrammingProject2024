@@ -24,22 +24,14 @@ public class Player extends Thread{
     @Override
     public void run(){
         int winning=-1;
-        //adds intiial hand to output string
+        //adds initial hand to output string
         fileoutput+="Player "+ favourite+ " initial hand";
         for (int i = 0; i < hand.length-1; i++) {
             fileoutput+=" "+hand[i];
         }
         fileoutput+="\n";
-        //puts any favourite cards on the left side of the hand(start of the array). Useful at start of game.
-        winning=winningHand();
-        if(winning!=-1){   //check if current hand is a winning hand
-            won=favourite;
-        }
-
-        try{
-            barrier.await();
-        }catch(InterruptedException | BrokenBarrierException e){}
-         
+        //TODO puts any favourite cards on the left side of the hand(start of the array). Useful at start of game.
+        
         for (int i = 0; i < hand.length-1; i++) {
             if(hand[i]==favourite && won==-1){
                 hand[i]=hand[completion];
@@ -47,6 +39,16 @@ public class Player extends Thread{
                 completion++;
             }
         }
+
+        winning=winningHand();
+        if(winning!=-1 || completion==4){   //check if current hand is a winning hand
+            won=favourite;
+        }
+
+        try{
+            barrier.await();
+        }catch(InterruptedException | BrokenBarrierException e){}
+         
         while(won==-1){   //check if anyone won
             try {
                 barrier.await();
@@ -57,17 +59,17 @@ public class Player extends Thread{
             
             fileoutput+="Player "+favourite+" draws "+hand[4]+" from deck "+favourite+"\n";
             winning=winningHand();
-            if(winning!=-1){   //check if current hand is a winning hand, cannot check at the end of the loop due to the slight chance of a winning hand appearing which is not witht the player's favourite cards
+            if(hand[4]==favourite && won==-1){
+                hand[4]=hand[completion];
+                hand[completion]=favourite;
+                completion++;
+            }
+            if(winning!=-1 || completion==4){   //check if current hand is a winning hand, cannot check at the end of the loop due to the slight chance of a winning hand appearing which is not witht the player's favourite cards
                 won=favourite;
             }
             try {
                 barrier.await();   //makes sure all players had a chance to update the "won" flag variable
             } catch (InterruptedException | BrokenBarrierException e) {
-            }
-            if(hand[4]==favourite && won==-1){
-                hand[4]=hand[completion];
-                hand[completion]=favourite;
-                completion++;
             }
             if(won!=-1){
                 break;
@@ -89,13 +91,15 @@ public class Player extends Thread{
             }
 
         }
-        if(favourite==won){ //prepares player file and outputs deck file
+        //prepares player file and outputs deck file
+        if(favourite==won){
             System.out.println("Player "+favourite+" wins");
             fileoutput+="Player "+favourite+" wins \nPlayer "+favourite+" exits \nPlayer "+favourite+
-            " final hand: "+ hand[4]+" "+ hand[4]+" "+ hand[4]+" "+ hand[4]+"\n";
+            " final hand: "+ winning+" "+ winning+" "+ winning+" "+ winning+"\n";
             for(int i=0; i<hand.length-1;i++){
-                if(hand[4]!=hand[i]){
-                    discarding_deck.writeDeckFile(favourite%threads+1, hand[i]);
+                if(winning!=hand[i]){
+                    discarding_deck.AddCard(hand[i], true);
+                    discarding_deck.writeDeckFile(favourite%threads+1);
                     break;
                 }
             }
@@ -104,7 +108,8 @@ public class Player extends Thread{
             fileoutput+="Player "+won+" has informed Player "+favourite+" that Player "+won+" has won\n"+
             "Player "+favourite+" exits \nPlayer "+favourite+
             " final hand: "+ hand[0]+" "+ hand[1]+" "+ hand[2]+" "+ hand[3]+"\n";
-            discarding_deck.writeDeckFile(favourite%threads+1, hand[4]);
+            discarding_deck.AddCard(hand[4], true);
+            discarding_deck.writeDeckFile(favourite%threads+1);
         }
         //outputs Player file
         try {
@@ -115,6 +120,7 @@ public class Player extends Thread{
         }
 
     }
+
     public int winningHand(){
         int[] unique= {-1,-1,-1};
         int counter=0;

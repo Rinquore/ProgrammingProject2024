@@ -20,10 +20,10 @@ public class Deck{
         return card;
 
     }
-    public void writeDeckFile(int decknum, int last_discard){ //print out deck to a file
+    public void writeDeckFile(int decknum){ //print out deck to a file
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("Deck"+decknum+"_output.txt"));
-            writer.write("deck"+decknum+" contents: "+last_discard);
+            writer.write("deck"+decknum+" contents:");
             for (int i = 0; i < deck.size(); i++) {
                 writer.write(" "+Integer.toString(deck.get(i)));
             }
