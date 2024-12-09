@@ -30,7 +30,9 @@ public class Player extends Thread{
             fileoutput+=" "+hand[i];
         }
         fileoutput+="\n";
-        //TODO puts any favourite cards on the left side of the hand(start of the array). Useful at start of game.
+
+        //puts any favourite cards on the left side of the hand(start of the array). Useful at start of game, 
+        //and makes choosing a random card to discard easier. once completion==4, the game is won.
         
         for (int i = 0; i < hand.length-1; i++) {
             if(hand[i]==favourite && won==-1){
@@ -48,13 +50,12 @@ public class Player extends Thread{
         try{
             barrier.await();
         }catch(InterruptedException | BrokenBarrierException e){}
-         
-        while(won==-1){   //check if anyone won
+        //gameplay loop, repeatedly check if anyone won(not just if we won, but any of the other players too)
+        while(won==-1){
             try {
                 barrier.await();
             } catch (InterruptedException | BrokenBarrierException e) {
             }
-            //gameplay loop. draw a card, discard a card. check for favourites.
             hand[4]=drawing_deck.getCard();
             
             fileoutput+="Player "+favourite+" draws "+hand[4]+" from deck "+favourite+"\n";
@@ -76,21 +77,21 @@ public class Player extends Thread{
             }
             Random random= new Random();
             int discarded_card_loc=random.nextInt(5-completion)+completion;
-            // discardCard(random.nextInt(5-completion)+completion);
             int tempval=hand[4];
             hand[4]=hand[discarded_card_loc];
             hand[discarded_card_loc]=tempval;
-            discarding_deck.AddCard(hand[4], true);
+            discarding_deck.addCard(hand[4], true);
             fileoutput+="Player "+favourite+" discards "+hand[4]+" to deck "+(favourite%threads +1)+"\n"+
             "Player "+favourite+" hand: "+hand[0]+" "+ hand[1]+" "+ hand[2]+" "+ hand[3]+"\n";
             try {
                 //these barriers separate the process of drawing cards from the process of discarding them,
                 //making sure no player can draw before everyone finished discarding and vice versa.
                 barrier.await();
-            } catch (InterruptedException | BrokenBarrierException e) {;
+            } catch (InterruptedException | BrokenBarrierException e) {
             }
 
         }
+        //end of gameplay loop
         //prepares player file and outputs deck file
         if(favourite==won){
             System.out.println("Player "+favourite+" wins");
@@ -98,7 +99,7 @@ public class Player extends Thread{
             " final hand: "+ winning+" "+ winning+" "+ winning+" "+ winning+"\n";
             for(int i=0; i<hand.length-1;i++){
                 if(winning!=hand[i]){
-                    discarding_deck.AddCard(hand[i], true);
+                    discarding_deck.addCard(hand[i], true);
                     discarding_deck.writeDeckFile(favourite%threads+1);
                     break;
                 }
@@ -108,7 +109,7 @@ public class Player extends Thread{
             fileoutput+="Player "+won+" has informed Player "+favourite+" that Player "+won+" has won\n"+
             "Player "+favourite+" exits \nPlayer "+favourite+
             " final hand: "+ hand[0]+" "+ hand[1]+" "+ hand[2]+" "+ hand[3]+"\n";
-            discarding_deck.AddCard(hand[4], true);
+            discarding_deck.addCard(hand[4], true);
             discarding_deck.writeDeckFile(favourite%threads+1);
         }
         //outputs Player file
@@ -121,7 +122,7 @@ public class Player extends Thread{
 
     }
 
-    public int winningHand(){
+    public int winningHand(){ //checks if current hand(including 5th card, which is the card that has just been drawn) is winning.
         int[] unique= {-1,-1,-1};
         int counter=0;
         int[] appearances={1,1,1};

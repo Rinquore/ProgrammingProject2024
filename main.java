@@ -5,22 +5,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.CyclicBarrier;
 
-/*assumptions this code makes of which I am not sure we are allowed to make:
--minimum value of n is 2. negatives dont make sense, 0 neither and 1 goes on in an infinite loop
--a valid deck contains no 0's. the specification is vague, saying all numbers must be positive. idk if 0 is counted as a positive number
----
-other assumptions which are given in the specification:
--a valid pack needs to have no negative values, be 8n rows long and have each row be a +ve integer
--we Only need a Deck and Player class
--we dont need to handle players winning at the same time
--we dont need to check if a deck pack allows for a win, we should assume it does/ only test if it works when the pack does allow a win.
--discarding should be random with the only exception being the preferred card.
-
-
-
-
-are the decks supposed to be stacks(you pick from the top) or can you pick a random card from them??
-*/
 public class main {
     public static void main(String[] args){
 
@@ -45,8 +29,7 @@ public class main {
         for (int i = 0; i < n; i++) {
             players[i]= new Player(i+1, decks[i], decks[(i+1)%n]);            
         }
-
-        //distribute cards to players and decks before threads start in a round-robin fashion.
+        //distribute cards to players and decks in a round-robin fashion before threads start
         try{
         BufferedReader reader = new BufferedReader(new FileReader(args[1]));
         for(int i=0; i<4;i++){
@@ -57,13 +40,11 @@ public class main {
         }
         for(int i=0; i<4*n;i++){
             String line=reader.readLine();
-            decks[i%n].AddCard(Integer.parseInt(line),false);
+            decks[i%n].addCard(Integer.parseInt(line),false);
         }
         reader.close();
         }catch (IOException e) {}
-
-        //write to the outputfiles string the hands dealt
-        //start threads, check for winners at the start of threads
+        //start threads
         for(Player player : players){
             player.start();
         }
@@ -74,7 +55,7 @@ public class main {
 
 
 
-    public static int validInputs(String value, String txt){ //returns n if inputs are valid and 0 if they are not. any n<0 is also considered invalid
+    public static int validInputs(String value, String txt){ //returns n if inputs are valid and 0 if they are not. any n<0 is considered invalid
         int n=0;
         try {
             n=Integer.parseInt(value);
@@ -86,7 +67,6 @@ public class main {
             BufferedReader reader= new BufferedReader(new FileReader(txt));
             String line=reader.readLine();
             int card_num=0;
-            //used to make sure each player has their favourite card number appear at least 4 times
             int card=0;
             while(line!=null){
                 card_num++;

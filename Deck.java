@@ -7,7 +7,7 @@ public class Deck{
     public ArrayList<Integer> deck=new ArrayList<>();
     public Deck(){}
 
-    public void AddCard(int card, boolean bottom){
+    public void addCard(int card, boolean bottom){
         if(bottom){
             deck.add(0, card);
         }else{
