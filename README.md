@@ -18,9 +18,9 @@ The project was collaboratively developed by **Raphael Figueiredo** and **Boris 
 
 ## How to Run
 
-To run the card game simulation project, open a terminal and go to the directory where the .jar file is located, and execute it by typing in the terminal java - jar gamesim.jar with two additional arguments:
+To run the card game simulation project, open a terminal and go to the directory where the .jar file is located, and execute it by typing in the terminal java - jar cards.jar with two additional arguments:
 1. The number of players (minimum 2).
-2. The path to a `deck.txt` file containing the cards.
+2. The path to a `deck.txt` file containing the cards. these arguments need to be separated by a space.
 
 The `deck.txt` file must be formatted with exactly `8 * <num_players>` positive integers, with each integer in its own line.
 
