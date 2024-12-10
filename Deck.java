@@ -1,35 +1,34 @@
 import java.io.BufferedWriter;
-import java.util.ArrayList;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class Deck {
-    private ArrayList<Integer> deck=new ArrayList<>();
+public class Deck{
+    public ArrayList<Integer> deck=new ArrayList<>();
+    public Deck(){}
 
-    //constructor
-    public Deck(){
-    }
-
-    public void addCard(int card){
-        deck.add(card);
-    }
-
-    public int getCard(){
-        int card=deck.get(0);
-        deck.remove(0);
-        return card;
-        
-    }
-
-    public void writeToFile(int decknum){
-        BufferedWriter writer= new BufferedWriter(new FileWriter("deck_output"+decknum+".txt"));
-        writer.write("deck"+decknum+" contents:");
-        for (int i = 0; i < deck.size(); i++) {
-            write.write(" "+deck.get(i));
+    public void addCard(int card, boolean bottom){
+        if(bottom){
+            deck.add(0, card);
+        }else{
+            deck.add(card);
         }
-        writer.close();
     }
+    public int getCard(){
+        int card=deck.get(deck.size()-1);
+        deck.remove(deck.size()-1);
+        return card;
 
-
-
-    //addCard function,getCard function,writetoFile function
+    }
+    public void writeDeckFile(int decknum){ //print out deck to a file
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Deck"+decknum+"_output.txt"));
+            writer.write("deck"+decknum+" contents:");
+            for (int i = 0; i < deck.size(); i++) {
+                writer.write(" "+Integer.toString(deck.get(i)));
+            }
+            writer.close();
+        } catch (IOException e) {
+        }
+    }
 }
