@@ -18,7 +18,7 @@ The project was collaboratively developed by **Raphael Figueiredo** and **Boris 
 
 ## How to Run
 
-To run the card game simulation project, open a terminal and go to the directory where the .class files are found, and execute main.java by typing in the terminal java main.java with two additional arguments:
+To run the card game simulation project, open a terminal and go to the directory where the .jar file is located, and execute it by typing in the terminal java - jar gamesim.jar with two additional arguments:
 1. The number of players (minimum 2).
 2. The path to a `deck.txt` file containing the cards.
 
