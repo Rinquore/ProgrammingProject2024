@@ -97,7 +97,7 @@ public class Player extends Thread{
             System.out.println("Player "+favourite+" wins");
             fileoutput+="Player "+favourite+" wins \nPlayer "+favourite+" exits \nPlayer "+favourite+
             " final hand: "+ winning+" "+ winning+" "+ winning+" "+ winning+"\n";
-            for(int i=0; i<hand.length-1;i++){
+            for(int i=0; i<hand.length;i++){
                 if(winning!=hand[i]){
                     discarding_deck.addCard(hand[i], true);
                     discarding_deck.writeDeckFile(favourite%threads+1);
